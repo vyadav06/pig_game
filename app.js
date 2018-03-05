@@ -36,7 +36,36 @@ document.querySelector('.btn-roll').addEventListener('click', function (){
     } else {
         // if it's 1 change the player
         //Use ternary operator instaed of using else if again
-        activePlayer === 0? activePlayer = 1 : activePlayer = 0;
+       nextPlayer();
+    }
+    
+});
+
+document.querySelector('.btn-hold').addEventListener('click', function(){
+   //1. Add current score to the Global Score
+    scores[activePlayer] += roundScore;
+    
+    //2. Update the User Interface
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    
+    //3. Check if player won the game
+    if(scores[activePlayer] >= 10){
+        document.querySelector('#name-' + activePlayer).textContent = 'Winner';
+        document.querySelector('.dice').style.display = 'none';
+//        document.querySelector('.player-0-panel').classList.remove('active');
+//        document.querySelector('.player-1-panel').classList.remove('active');
+        //OR
+        document.querySelector('.player-'+ activePlayer+ '-panel').classList.add('winner');
+        document.querySelector('.player-'+ activePlayer+ '-panel').classList.remove('winner');
+    } else{
+        //nextPlayer
+    nextPlayer();
+   
+    }
+});
+
+function nextPlayer(){
+     activePlayer === 0? activePlayer = 1 : activePlayer = 0;
         roundScore = 0;
         //setting roundScore = 0 on the User interface
         document.getElementById('current-0').textContent = '0';
@@ -52,11 +81,8 @@ document.querySelector('.btn-roll').addEventListener('click', function (){
         
         // hiding the dice when first player loses and second player turn comes
         document.querySelector('.dice').style.display = 'none';
-    }
     
-});
-
-
+};
 //document.querySelector('#current-' + activePlayer).textContent= dice;
 //document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
 
